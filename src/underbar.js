@@ -108,6 +108,23 @@
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
+    var isUnique;
+    var result = [];
+
+    //TODO: find a more elegant solution than nested _.each() loops
+    _.each(array, function(arrayValue){
+      isUnique = true;
+      _.each(result, function(resultValue){
+        if(arrayValue === resultValue){
+          isUnique = false;
+        }
+      });
+      if(isUnique){
+        result.push(arrayValue);
+      }
+    });
+
+    return result;
   };
 
 
