@@ -48,12 +48,18 @@
   // iterator function over each item in the input collection.
   _.each = function(collection, iterator) {
     var value;
-    for(var key in collection){
-      if(collection.hasOwnProperty(key)){
-        // Ignore properties from prototypes
-        value = collection[key];
-        iterator(value, Number(key), collection);
-          //Keep the mocha test happy by converting key to a number
+    if(collection.constructor === Array){
+      for(var index = 0; index < collection.length; index++){
+        value = collection[index];
+        iterator(value, index, collection);
+      }
+    } else {
+      for(var key in collection){
+        if(collection.hasOwnProperty(key)){
+          // Ignore inherited properties
+          value = collection[key];
+          iterator(value, key, collection);
+        }
       }
     }
   };
